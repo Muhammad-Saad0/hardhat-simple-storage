@@ -2,6 +2,8 @@ require("@nomicfoundation/hardhat-toolbox");
 require("@nomiclabs/hardhat-etherscan");
 require("dotenv").config();
 require("./tasks/block-number");
+require("hardhat-gas-reporter");
+require("solidity-coverage");
 
 const RPC_URL = process.env.SEPOLIA_RPC_URL;
 const ACCOUNT_PRIVATE_KEY =
@@ -25,6 +27,13 @@ module.exports = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+  },
+  gasReporter: {
+    enabled: true,
+    outputFile: "gas-report.txt",
+    noColors: true,
+    currency: "USD",
+    coinmarketcap: process.env.COIN_MARKETCAP_API,
   },
   solidity: "0.8.19",
 };
