@@ -23,14 +23,28 @@ async function main() {
     /*etherscan can have problems the contract might not
     be on etherscan yet so we wait 6 blockconfirmations then
     verify the contract*/
+    console.log(
+      "waiting for block confirmations"
+    );
     await simpleStorage.deployTransaction.wait(6);
     await verify(simpleStorage.address, []);
   }
+
+  const favNumber =
+    await simpleStorage.retrieve();
+  console.log(`fav number is: ${favNumber}`);
+  const transaction = await simpleStorage.store(
+    7
+  );
+  await transaction.wait(1);
+  const updatedNumber =
+    await simpleStorage.retrieve();
+  console.log(`fav number is: ${updatedNumber}`);
 }
 
 //these args parameter is related to constructor
 async function verify(contractAddress, args) {
-  console.log("verifying contract");
+  console.log("verifying contract...");
   //this allows us to run any hardhat task
   //(that can br run in terminal)
 
